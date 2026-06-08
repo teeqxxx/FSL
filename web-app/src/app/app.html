@@ -1,5 +1,6 @@
 <!-- questo è l'html (sito) -->
 
+<!-- 
 <main class="main">
   <div style="padding: 30px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 1000px; margin: 0 auto;">
   
@@ -36,8 +37,9 @@
           </td>
           <td style="padding: 12px 15px;">€ {{ prodotto.prezzo }}</td>
           <td style="padding: 12px 15px;">
-
+          -->
             <!-- @if = nuovo ngif = condizione che confronta booleani-->
+                <!--
             @if (prodotto.disponibilita) {
               <span style="color: green; font-weight: bold;">Disponibile</span>
             } @else {
@@ -47,10 +49,12 @@
           </td>
         </tr>
         }   
+                -->
         <!-- 
         se ci sono dati in "prodotti" (array con tot elementi), angular mostra le cose del @for, 
         se non ci sono dati (vuoto o non definito), angular mostra le cose del @else 
         -->
+        <!--
         @empty 
         {
           <tr>
@@ -63,5 +67,64 @@
     </table>
   </div>
 </main>
+-->
+<div style="padding: 30px; font-family: sans-serif; max-width: 800px; margin: 0 auto;">
+  
+  <h1>Lista pokémon</h1>
+  
+  <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+    <thead>
+      <tr style="background-color: #ef5350; color: white; text-align: left;">
+        <th style="padding: 10px;">Pokémon</th>
+        <th style="padding: 10px;">Dettagli</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      @for (pokemon of listaPokemon(); track pokemon.name) 
+      {
+        <tr style="border-bottom: 1px solid #ddd;">
+          <td style="padding: 10px; font-weight: bold; text-transform: capitalize;">
+            {{ pokemon.name }}
+          </td>
+          
+          <td style="padding: 10px;">
+            <button (click)="caricaDettagli(pokemon.url)">
+              Vedi dati
+            </button>
+          </td>
+        </tr>
+
+        @if (pokemonSelezionato() && pokemonSelezionato()?.name == pokemon.name) 
+        {
+          <p>
+              ID: #{{ pokemonSelezionato()?.id }}
+            </p>
+            
+            <p>
+              Esperienza: {{ pokemonSelezionato()?.base_experience }} XP
+            </p>
+
+            <b>Abilità:</b>
+            <ul>
+              @for (boh of pokemonSelezionato()?.abilities; track boh.slot) {
+                <li>
+                  {{ boh.ability.name }}
+                </li>
+              }
+            </ul>
+        }
+      } 
+      @empty 
+      {
+        <tr>
+          <td colspan="2" style="padding: 20px; text-align: center;">
+            Caricamento dei Pokémon in corso...
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table> 
+</div>
 
 <router-outlet />
