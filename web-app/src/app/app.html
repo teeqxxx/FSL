@@ -1,0 +1,67 @@
+<!-- questo è l'html (sito) -->
+
+<main class="main">
+  <div style="padding: 30px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 1000px; margin: 0 auto;">
+  
+    <h1 style="color: #333; border-bottom: 2px solid #007acc; padding-bottom: 10px;">
+      Dati database in app.ts
+    </h1>
+    
+    <p style="color: #666; margin-bottom: 25px;">
+      Questa tabella mostra l'interfaccia pronta a ricevere i dati reali dal backend .NET + Postgres.
+    </p>
+
+    <table style="width: 100%; border-collapse: collapse; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+      <thead>
+        <tr style="background-color: #007acc; color: white; text-align: left;">
+          <th style="padding: 12px 15px;">ID</th>
+          <th style="padding: 12px 15px;">Nome Prodotto</th>
+          <th style="padding: 12px 15px;">Categoria</th>
+          <th style="padding: 12px 15px;">Prezzo</th>
+          <th style="padding: 12px 15px;">Stato</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        
+        @for (prodotto of prodotti; track prodotto.id) 
+        {
+        <tr style="border-bottom: 1px solid #dddddd; background-color: #ffffff;">
+          <td style="padding: 12px 15px; font-weight: bold; color: #555;">{{ prodotto.id }}</td>
+          <td style="padding: 12px 15px;">{{ prodotto.nome }}</td>
+          <td style="padding: 12px 15px;">
+            <span style="background-color: #e0f0ff; color: #005bb5; padding: 3px 8px; border-radius: 4px; font-size: 14px;">
+              {{ prodotto.categoria }}
+            </span>
+          </td>
+          <td style="padding: 12px 15px;">€ {{ prodotto.prezzo }}</td>
+          <td style="padding: 12px 15px;">
+
+            <!-- @if = nuovo ngif = condizione che confronta booleani-->
+            @if (prodotto.disponibilita) {
+              <span style="color: green; font-weight: bold;">Disponibile</span>
+            } @else {
+              <span style="color: red; font-weight: bold;">Esaurito</span>
+            }
+
+          </td>
+        </tr>
+        }   
+        <!-- 
+        se ci sono dati in "prodotti" (array con tot elementi), angular mostra le cose del @for, 
+        se non ci sono dati (vuoto o non definito), angular mostra le cose del @else 
+        -->
+        @empty 
+        {
+          <tr>
+            <td colspan="5" style="padding: 20px; text-align: center; color: #999;">
+              Nessun dato disponibile nel database.
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<router-outlet />
